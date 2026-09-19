@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>European Life Missions Passport 2026/27</title>
+<style>
+  :root{
+    --bg:#eef6fb;
+    --card:#ffffff;
+    --ink:#183042;
+    --muted:#5f7280;
+    --blue:#2d78a7;
+    --blue2:#5aa6d1;
+    --line:#cfe3ef;
+    --soft:#f7fbfd;
+    --ok:#2f7d5d;
+    --warn:#9a6b20;
+    --shadow:0 8px 24px rgba(24,48,66,.08);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5}
+  header{
+    background:linear-gradient(135deg,#184f73,#4a9aca);
+    color:white;padding:34px 20px 28px;
+  }
+  .wrap{max-width:1050px;margin:0 auto}
+  h1{margin:.15rem 0 .45rem;font-size:clamp(1.8rem,4vw,3rem);line-height:1.1}
+  h2{margin:.2rem 0 .8rem}
+  h3{margin:.2rem 0 .7rem}
+  p{margin:.45rem 0}
+  .sub{max-width:800px;font-size:1.05rem}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);padding:.25rem .65rem;border-radius:999px;font-size:.9rem}
+  main{padding:22px 16px 50px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    box-shadow:var(--shadow);padding:20px;margin:18px 0;
+  }
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .step{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .step b{display:block;color:var(--blue);margin-bottom:4px}
+  label{display:block;font-weight:700;margin:.8rem 0 .3rem}
+  input,select,textarea{
+    width:100%;padding:10px 12px;border:1px solid #b8d3e2;border-radius:10px;
+    font:inherit;color:var(--ink);background:#fff;
+  }
+  textarea{min-height:90px;resize:vertical}
+  button,.buttonlink{
+    appearance:none;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;
+    cursor:pointer;background:var(--blue);color:white;text-decoration:none;display:inline-block;
+  }
+  button.secondary,.buttonlink.secondary{background:#eaf4f9;color:#245a78;border:1px solid #bcd8e7}
+  button.ghost{background:white;color:#245a78;border:1px solid #bcd8e7}
+  button.small{padding:7px 10px;font-size:.92rem}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .profilegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .mission-nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+  .mission-nav a{
+    text-decoration:none;color:#245a78;background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:8px 12px;font-weight:700;
+  }
+  .mission{scroll-margin-top:12px}
+  .mission-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
+  .num{
+    flex:0 0 44px;height:44px;border-radius:50%;display:grid;place-items:center;
+    background:#dff0f8;color:#245a78;font-weight:800;font-size:1.15rem;
+  }
+  .titleblock{display:flex;gap:12px;align-items:center}
+  .status{font-size:.9rem;padding:.3rem .6rem;border-radius:999px;background:#eef2f4;color:#62727c;white-space:nowrap}
+  .status.done{background:#e6f4ed;color:var(--ok)}
+  .focus{
+    background:#f4fafd;border-left:5px solid var(--blue2);padding:12px 14px;border-radius:8px;margin:14px 0;
+  }
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .pane{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:15px}
+  .pane h3{font-size:1.05rem;color:#245a78}
+  .starter{
+    background:#fff;border:1px dashed #9fc7da;border-radius:10px;padding:10px;margin:8px 0;
+    font-size:.95rem;
+  }
+  .output{
+    min-height:115px;background:#fff;border:2px solid #93bfd6;border-radius:12px;padding:12px;
+    white-space:pre-wrap;
+  }
+  .exchange{
+    background:#fff8e9;border:1px solid #eed69c;border-radius:14px;padding:15px;margin-top:16px;
+  }
+  .exchange h3{color:#775014}
+  .checkrow{display:flex;gap:8px;align-items:flex-start;margin:8px 0}
+  .checkrow input{width:auto;margin-top:4px}
+  .checkrow label{font-weight:400;margin:0}
+  .stamp{
+    margin-top:12px;display:none;align-items:center;gap:10px;color:var(--ok);font-weight:800;
+  }
+  .stamp.show{display:flex}
+  .stampmark{
+    width:46px;height:46px;border:3px solid var(--ok);border-radius:50%;display:grid;place-items:center;
+    transform:rotate(-7deg);font-size:1.25rem;
+  }
+  details summary{cursor:pointer;font-weight:800;color:#245a78}
+  .tiny{font-size:.9rem;color:var(--muted)}
+  .progressbar{height:10px;background:#dceaf1;border-radius:999px;overflow:hidden;margin-top:8px}
+  .progressbar span{display:block;height:100%;background:var(--blue2);width:0%}
+  footer{padding:24px 16px 35px;color:#526875;text-align:center}
+  .print-only{display:none}
+  .notice{background:#eaf4f9;border:1px solid #c1ddea;border-radius:12px;padding:12px;margin-top:12px}
+  @media(max-width:760px){
+    .how,.grid2,.profilegrid{grid-template-columns:1fr}
+    .mission-head{display:block}
+    .status{display:inline-block;margin-top:8px}
+  }
+  @media print{
+    body{background:white;color:black}
+    header,main > .screen-only,footer{display:none!important}
+    main{padding:0}
+    .print-only{display:block}
+    .print-page{page-break-after:always;padding:8mm 10mm}
+    .print-page:last-child{page-break-after:auto}
+    .print-title{border-bottom:2px solid #666;padding-bottom:5px;margin-bottom:12px}
+    .print-box{border:1px solid #aaa;border-radius:8px;padding:10px;margin:10px 0}
+    .print-label{font-weight:bold}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="tag">Life Skills for Europe · 2026/27</span>
+    <h1>European Life Missions Passport</h1>
+    <p class="sub">Prepare your contribution here, exchange it with students in TwinSpace, then return and record what you learned.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="screen-only">
+    <section class="card">
+      <h2>How it works</h2>
+      <div class="how">
+        <div class="step"><b>1 · PREPARE</b>Answer the short questions and build your English contribution.</div>
+        <div class="step"><b>2 · EXCHANGE</b>Post your text or use it as an audio script in TwinSpace. Read or listen to a partner.</div>
+        <div class="step"><b>3 · REFLECT</b>Come back here and write one thing you learned from another country.</div>
+      </div>
+      <div class="notice">
+        <b>Privacy:</b> Your entries are saved only in this browser. This website does not send anything to TwinSpace or to a server.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>My passport</h2>
+      <div class="profilegrid">
+        <div>
+          <label for="nickname">Project name / nickname</label>
+          <input id="nickname" placeholder="e.g. Germany Pia">
+        </div>
+        <div>
+          <label for="country">My country</label>
+          <select id="country">
+            <option value="">Choose…</option>
+            <option>Germany</option>
+            <option>France</option>
+            <option>Greece</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:15px">
+        <b id="progressText">0 of 5 missions completed</b>
+        <div class="progressbar"><span id="progressFill"></span></div>
+      </div>
+      <div class="actions">
+        <button id="saveBtn">Save now</button>
+        <button class="secondary" id="printBtn">Print / Save as PDF</button>
+        <button class="secondary" id="backupBtn">Save backup</button>
+        <label class="buttonlink secondary" for="restoreFile" style="margin:0">Restore backup</label>
+        <input id="restoreFile" type="file" accept="application/json" style="display:none">
+        <button class="ghost" id="clearBtn">Clear local data</button>
+      </div>
+    </section>
+
+    <details class="card">
+      <summary>Project settings (teachers)</summary>
+      <div class="profilegrid" style="margin-top:10px">
+        <div>
+          <label for="projectTitle">Project title</label>
+          <input id="projectTitle" value="Life Skills for Europe">
+        </div>
+        <div>
+          <label for="projectYear">Project year</label>
+          <input id="projectYear" value="2026/27">
+        </div>
+      </div>
+      <label for="schools">Partner schools</label>
+      <textarea id="schools" placeholder="School 1, Country&#10;School 2, Country&#10;School 3, Country"></textarea>
+      <label for="twinspaceUrl">TwinSpace project link (optional)</label>
+      <input id="twinspaceUrl" placeholder="https://...">
+      <p class="tiny">The school list is used in the printed passport footer. The TwinSpace link activates an “Open TwinSpace” button in every mission.</p>
+    </details>
+
+    <nav class="mission-nav" aria-label="Mission navigation">
+      <a href="#m1">1 · Meet the Team</a>
+      <a href="#m2">2 · My First Home</a>
+      <a href="#m3">3 · My First Money</a>
+      <a href="#m4">4 · Stay Safe</a>
+      <a href="#m5">5 · Smart & Digital Choices</a>
+    </nav>
+
+    <div id="missions"></div>
+  </div>
+
+  <div id="printArea" class="print-only"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>European Life Missions Passport</b></p>
+    <p class="tiny">Personal preparation portfolio for an eTwinning project. No eTwinning logo is used on this page.</p>
+  </div>
+</footer>
+
+<script>
+const missions = [
+  {
+    id:"m1", n:1, title:"Meet the Team",
+    question:"Who are the students I will work with?",
+    situation:"You are going to work with students from Germany, France and Greece. Prepare a short introduction so your partners can get to know you.",
+    fields:[
+      {key:"like", label:"One thing I like", placeholder:"e.g. football, music, gaming, cooking"},
+      {key:"good", label:"One thing I am good at", placeholder:"e.g. helping others, drawing, fixing things"},
+      {key:"learn", label:"One thing I would like to learn in this project", placeholder:"e.g. how young people live in other countries"},
+      {key:"ask", label:"One question for a student from another country", placeholder:"e.g. What do you like to do after school?"}
+    ],
+    starters:["I like …","I am good at …","In this project, I would like to learn …","My question for you is …"],
+    build:d => `Hello! My project name is ${d.nickname || "…"}. I am from ${d.country || "…"}. I like ${d.like || "…"}. I am good at ${d.good || "…"}. In this project, I would like to learn ${d.learn || "…"}. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your introduction in the TwinSpace forum. You may post the text or use it as a short audio script. Then read or listen to one student from another country and reply to that person.",
+    reply:["Nice to meet you! I also like …","That is interesting. I …","My answer to your question is …"]
+  },
+  {
+    id:"m2", n:2, title:"My First Home",
+    question:"What is important when I move into my first home?",
+    situation:"Imagine you are moving out for the first time. Make a simple choice and explain what matters to you.",
+    fields:[
+      {key:"home", label:"I would prefer to…", type:"select", options:["live alone","share a flat","stay with my family a little longer"]},
+      {key:"rent", label:"About how much could I spend on housing each month?", placeholder:"e.g. €450"},
+      {key:"important", label:"The most important thing about my first home is…", placeholder:"e.g. low rent, near work/school, public transport, enough space"},
+      {key:"ask", label:"One housing question for the partner countries", placeholder:"e.g. Is a deposit usual in your country?"}
+    ],
+    starters:["I would prefer to …","I could spend about … per month.","For me, … is important.","In your country, …?"],
+    build:d => `For my first home, I would prefer to ${d.home || "…"}. I could spend about ${d.rent || "…"} per month. For me, ${d.important || "…"} is important. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your prepared choice in the TwinSpace forum. Read one contribution from another country. Reply and compare one point: What is similar or different?",
+    reply:["I would choose the same because …","I would choose something different because …","In my country / for me, … is similar/different."]
+  },
+  {
+    id:"m3", n:3, title:"My First Money",
+    question:"Can I make sensible choices with my money?",
+    situation:"You have €100 left and 10 days until your next payment. You cannot buy everything you want. Decide what you would do first.",
+    fields:[
+      {key:"first", label:"What would you do first?", type:"select", options:["plan food and transport first","save part of the money","buy something I want and use the rest carefully","do something else"]},
+      {key:"save", label:"One thing I would save money on", placeholder:"e.g. takeaway food, clothes, subscriptions"},
+      {key:"reason", label:"Why?", placeholder:"e.g. because food and transport are more important"},
+      {key:"ask", label:"One money question for the partner countries", placeholder:"e.g. What do young people in your country spend a lot of money on?"}
+    ],
+    starters:["First, I would …","I would save money on …","This is important because …","My question is …"],
+    build:d => `I have €100 left for 10 days. First, I would ${d.first || "…"}. I would save money on ${d.save || "…"}. This is important because ${d.reason || "…"}. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your decision. Then read one decision from another country and reply: Do you agree? What would you do differently?",
+    reply:["I agree because …","I would do something different: …","For me, … is more important."]
+  },
+  {
+    id:"m4", n:4, title:"Stay Safe",
+    question:"What do I do when something goes wrong?",
+    situation:"Choose one everyday problem. Think about the first sensible step and who could help you.",
+    fields:[
+      {key:"problem", label:"Choose a situation", type:"select", options:["My phone is stolen.","I have an accident.","Something in my rented flat is damaged.","I become ill while travelling in another European country."]},
+      {key:"first", label:"What would you do first?", placeholder:"e.g. call someone, report it, ask for medical help"},
+      {key:"help", label:"Who or what could help?", placeholder:"e.g. police, doctor, insurance, landlord"},
+      {key:"ask", label:"One question for the partner countries", placeholder:"e.g. Who would you contact first in your country?"}
+    ],
+    starters:["My situation is …","First, I would …","I think … could help.","What would you do in your country?"],
+    build:d => `My situation is: ${d.problem || "…"}. First, I would ${d.first || "…"}. I think ${d.help || "…"} could help. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your case and first step. A partner from another country answers what they would do. Then reply once and note one difference or similarity.",
+    reply:["In my country, I would …","That is similar to my answer because …","That is different because …"]
+  },
+  {
+    id:"m5", n:5, title:"Smart & Digital Choices",
+    question:"Can I recognise when I should stop and check?",
+    situation:"Digital decisions are part of adult life too. Choose a situation that could be risky or misleading and explain how you would check it.",
+    fields:[
+      {key:"case", label:"Choose a situation", type:"select", options:["A very cheap flat asks for money before a viewing.","A message asks me to send my bank details.","An AI answer gives important information but no source.","An online shop price looks too good to be true."]},
+      {key:"trust", label:"Would you trust it?", type:"select", options:["No, not yet.","Maybe, but I would check first.","Yes, but only after checking."]},
+      {key:"check", label:"How would you check?", placeholder:"e.g. official website, another source, ask an adult/teacher, search for reviews"},
+      {key:"reason", label:"One warning sign", placeholder:"e.g. pressure, no source, strange web address, asks for money"},
+      {key:"ask", label:"One question for the partner countries", placeholder:"e.g. What online scam do young people often see in your country?"}
+    ],
+    starters:["I would / would not trust this because …","One warning sign is …","I would check …","My question for you is …"],
+    build:d => `My situation is: ${d.case || "…"}. ${d.trust || "…"}. One warning sign is ${d.reason || "…"}. I would check ${d.check || "…"}. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your decision. Read one partner contribution and add one extra warning sign or one extra way to check. The goal is to build a small collection of practical tips across the three countries.",
+    reply:["I agree. Another warning sign is …","I would also check …","A useful tip from my country is …"]
+  }
+];
+
+let state = {
+  profile:{nickname:"",country:""},
+  settings:{projectTitle:"Life Skills for Europe",projectYear:"2026/27",schools:"",twinspaceUrl:""},
+  missions:{}
+};
+
+function ensureMission(id){
+  if(!state.missions[id]) state.missions[id] = {fields:{}, output:"", posted:false, replied:false, reflection:""};
+  return state.missions[id];
+}
+missions.forEach(m => ensureMission(m.id));
+
+function el(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+}
+function save(show=false){
+  syncTop();
+  localStorage.setItem("lifeMissionsPassport_v3", JSON.stringify(state));
+  if(show){
+    const old = saveBtn.textContent; saveBtn.textContent="Saved ✓";
+    setTimeout(()=>saveBtn.textContent=old,900);
+  }
+  updateProgress();
+}
+function load(){
+  try{
+    const raw=localStorage.getItem("lifeMissionsPassport_v3");
+    if(raw) state=Object.assign(state,JSON.parse(raw));
+  }catch(e){}
+  missions.forEach(m => ensureMission(m.id));
+}
+function syncTop(){
+  state.profile.nickname=el("nickname").value.trim();
+  state.profile.country=el("country").value;
+  state.settings.projectTitle=el("projectTitle").value.trim();
+  state.settings.projectYear=el("projectYear").value.trim();
+  state.settings.schools=el("schools").value;
+  state.settings.twinspaceUrl=el("twinspaceUrl").value.trim();
+}
+function setTop(){
+  el("nickname").value=state.profile.nickname||"";
+  el("country").value=state.profile.country||"";
+  el("projectTitle").value=state.settings.projectTitle||"Life Skills for Europe";
+  el("projectYear").value=state.settings.projectYear||"2026/27";
+  el("schools").value=state.settings.schools||"";
+  el("twinspaceUrl").value=state.settings.twinspaceUrl||"";
+}
+
+function render(){
+  const host=el("missions");
+  host.innerHTML="";
+  missions.forEach(m=>{
+    const ms=ensureMission(m.id);
+    const sec=document.createElement("section");
+    sec.className="card mission"; sec.id=m.id;
+    sec.innerHTML=`
+      <div class="mission-head">
+        <div class="titleblock">
+          <div class="num">${m.n}</div>
+          <div><div class="tiny">MISSION ${m.n}</div><h2>${esc(m.title)}</h2></div>
+        </div>
+        <div class="status" id="${m.id}_status">In progress</div>
+      </div>
+      <div class="focus"><b>Essential question:</b> ${esc(m.question)}<br>${esc(m.situation)}</div>
+      <div class="grid2">
+        <div class="pane">
+          <h3>1 · PREPARE</h3>
+          <p class="tiny">Short answers are enough. Use simple English.</p>
+          <div id="${m.id}_fields"></div>
+          <div class="starter"><b>Useful sentence starters</b><br>${m.starters.map(esc).join("<br>")}</div>
+          <div class="actions">
+            <button class="small" data-build="${m.id}">Build my English contribution</button>
+          </div>
+        </div>
+        <div class="pane">
+          <h3>My TwinSpace contribution</h3>
+          <div class="output" id="${m.id}_output" contenteditable="true" role="textbox" aria-label="Prepared TwinSpace contribution">${esc(ms.output||"")}</div>
+          <div class="actions">
+            <button class="small secondary" data-copy="${m.id}">Copy text</button>
+            <button class="small secondary" data-audio="${m.id}">Use as audio script</button>
+          </div>
+          <p class="tiny" id="${m.id}_hint">You can edit the generated text before posting it.</p>
+        </div>
+      </div>
+      <div class="exchange">
+        <h3>2 · EXCHANGE IN TWINSPACE</h3>
+        <p>${esc(m.twin)}</p>
+        <div class="starter"><b>Reply starters</b><br>${m.reply.map(esc).join("<br>")}</div>
+        <div class="actions">
+          <a class="buttonlink secondary twinlink" target="_blank" rel="noopener" style="display:none">Open TwinSpace</a>
+        </div>
+        <div class="checkrow"><input type="checkbox" id="${m.id}_posted"><label for="${m.id}_posted">I posted my contribution in TwinSpace.</label></div>
+        <div class="checkrow"><input type="checkbox" id="${m.id}_replied"><label for="${m.id}_replied">I read/listened to a student from another country and replied.</label></div>
+      </div>
+      <div class="pane" style="margin-top:16px">
+        <h3>3 · REFLECT</h3>
+        <label for="${m.id}_reflection">One thing I learned from another country</label>
+        <textarea id="${m.id}_reflection" placeholder="e.g. I learned that …">${esc(ms.reflection||"")}</textarea>
+        <div class="stamp" id="${m.id}_stamp"><span class="stampmark">★</span> Mission completed</div>
+      </div>
+    `;
+    host.appendChild(sec);
+
+    const fhost=el(`${m.id}_fields`);
+    m.fields.forEach(f=>{
+      const val=ms.fields[f.key]||"";
+      const wrapper=document.createElement("div");
+      let control="";
+      if(f.type==="select"){
+        control=`<select data-field="${m.id}:${f.key}"><option value="">Choose…</option>${f.options.map(o=>`<option ${o===val?"selected":""}>${esc(o)}</option>`).join("")}</select>`;
+      } else {
+        control=`<input data-field="${m.id}:${f.key}" value="${esc(val)}" placeholder="${esc(f.placeholder||"")}">`;
+      }
+      wrapper.innerHTML=`<label>${esc(f.label)}</label>${control}`;
+      fhost.appendChild(wrapper);
+    });
+    el(`${m.id}_posted`).checked=!!ms.posted;
+    el(`${m.id}_replied`).checked=!!ms.replied;
+    updateMissionUI(m.id);
+  });
+
+  bindMissionEvents();
+  refreshTwinLinks();
+  updateProgress();
+}
+
+function bindMissionEvents(){
+  document.querySelectorAll("[data-field]").forEach(node=>{
+    node.addEventListener("input",()=>{
+      const [mid,key]=node.dataset.field.split(":");
+      ensureMission(mid).fields[key]=node.value;
+      save();
+    });
+  });
+  document.querySelectorAll("[data-build]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      syncTop();
+      const m=missions.find(x=>x.id===btn.dataset.build);
+      const ms=ensureMission(m.id);
+      const data={...ms.fields,...state.profile};
+      ms.output=m.build(data);
+      el(`${m.id}_output`).textContent=ms.output;
+      save();
+    });
+  });
+  document.querySelectorAll("[data-copy]").forEach(btn=>{
+    btn.addEventListener("click",async()=>{
+      const mid=btn.dataset.copy;
+      const text=el(`${mid}_output`).innerText.trim();
+      ensureMission(mid).output=text;
+      save();
+      try{
+        await navigator.clipboard.writeText(text);
+        const old=btn.textContent; btn.textContent="Copied ✓";
+        setTimeout(()=>btn.textContent=old,900);
+      }catch(e){
+        alert("Please select the text and copy it manually.");
+      }
+    });
+  });
+  document.querySelectorAll("[data-audio]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const mid=btn.dataset.audio;
+      const text=el(`${mid}_output`).innerText.trim();
+      ensureMission(mid).output=text;
+      save();
+      el(`${mid}_hint`).textContent="Read this text aloud as your short audio message. Speak slowly. It does not need to be perfect.";
+    });
+  });
+  missions.forEach(m=>{
+    el(`${m.id}_output`).addEventListener("input",()=>{
+      ensureMission(m.id).output=el(`${m.id}_output`).innerText.trim(); save();
+    });
+    el(`${m.id}_posted`).addEventListener("change",()=>{
+      ensureMission(m.id).posted=el(`${m.id}_posted`).checked; save(); updateMissionUI(m.id);
+    });
+    el(`${m.id}_replied`).addEventListener("change",()=>{
+      ensureMission(m.id).replied=el(`${m.id}_replied`).checked; save(); updateMissionUI(m.id);
+    });
+    el(`${m.id}_reflection`).addEventListener("input",()=>{
+      ensureMission(m.id).reflection=el(`${m.id}_reflection`).value; save(); updateMissionUI(m.id);
+    });
+  });
+}
+
+function isDone(mid){
+  const ms=ensureMission(mid);
+  return !!(ms.posted && ms.replied && ms.reflection.trim());
+}
+function updateMissionUI(mid){
+  const done=isDone(mid);
+  const st=el(`${mid}_status`), stamp=el(`${mid}_stamp`);
+  if(!st||!stamp)return;
+  st.textContent=done?"Completed ✓":"In progress";
+  st.classList.toggle("done",done);
+  stamp.classList.toggle("show",done);
+  updateProgress();
+}
+function updateProgress(){
+  const done=missions.filter(m=>isDone(m.id)).length;
+  el("progressText").textContent=`${done} of ${missions.length} missions completed`;
+  el("progressFill").style.width=`${done/missions.length*100}%`;
+}
+function refreshTwinLinks(){
+  syncTop();
+  document.querySelectorAll(".twinlink").forEach(a=>{
+    if(state.settings.twinspaceUrl){
+      a.href=state.settings.twinspaceUrl; a.style.display="inline-block";
+    }else a.style.display="none";
+  });
+}
+function renderPrint(){
+  syncTop();
+  const schools=(state.settings.schools||"").trim();
+  const host=el("printArea");
+  host.innerHTML=`
+    <section class="print-page">
+      <h1>${esc(state.settings.projectTitle||"Life Skills for Europe")}</h1>
+      <h2>European Life Missions Passport</h2>
+      <div class="print-box"><span class="print-label">Project name:</span> ${esc(state.profile.nickname||"")}<br>
+      <span class="print-label">Country:</span> ${esc(state.profile.country||"")}<br>
+      <span class="print-label">Project year:</span> ${esc(state.settings.projectYear||"")}</div>
+      <p>This passport documents my preparation, exchange and reflection in five European Life Missions.</p>
+    </section>
+  `;
+  missions.forEach(m=>{
+    const ms=ensureMission(m.id);
+    host.insertAdjacentHTML("beforeend",`
+      <section class="print-page">
+        <div class="print-title"><b>Mission ${m.n}</b><h2>${esc(m.title)}</h2></div>
+        <div class="print-box"><div class="print-label">My prepared TwinSpace contribution</div>${esc(ms.output||"—").replace(/\n/g,"<br>")}</div>
+        <div class="print-box"><div class="print-label">Exchange completed</div>
+          Posted in TwinSpace: ${ms.posted?"Yes":"No"}<br>
+          Replied to a student from another country: ${ms.replied?"Yes":"No"}
+        </div>
+        <div class="print-box"><div class="print-label">One thing I learned from another country</div>${esc(ms.reflection||"—").replace(/\n/g,"<br>")}</div>
+        <p>${isDone(m.id)?"★ Mission completed":"Mission not yet completed"}</p>
+        ${schools?`<p style="margin-top:24px;font-size:9pt">This passport was created as part of an eTwinning project of the partner schools:<br>${esc(schools).replace(/\n/g," · ")}</p>`:""}
+      </section>
+    `);
+  });
+}
+
+load();
+setTop();
+render();
+
+["nickname","country","projectTitle","projectYear","schools","twinspaceUrl"].forEach(id=>{
+  el(id).addEventListener("input",()=>{save(); if(id==="twinspaceUrl")refreshTwinLinks();});
+  el(id).addEventListener("change",()=>{save(); if(id==="twinspaceUrl")refreshTwinLinks();});
+});
+el("saveBtn").addEventListener("click",()=>save(true));
+el("printBtn").addEventListener("click",()=>{save();renderPrint();window.print();});
+el("backupBtn").addEventListener("click",()=>{
+  save();
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="LifeMissions_Passport_Backup.json";
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+});
+el("restoreFile").addEventListener("change",async e=>{
+  const file=e.target.files[0]; if(!file)return;
+  try{
+    const data=JSON.parse(await file.text());
+    state=data; missions.forEach(m=>ensureMission(m.id));
+    save(); setTop(); render();
+    alert("Backup restored.");
+  }catch(err){ alert("This backup file could not be restored."); }
+  e.target.value="";
+});
+el("clearBtn").addEventListener("click",()=>{
+  if(confirm("Delete all locally saved passport entries on this device?")){
+    localStorage.removeItem("lifeMissionsPassport_v3");
+    location.reload();
+  }
+});
+window.addEventListener("beforeprint",renderPrint);
+</script>
+</body>
+</html>
