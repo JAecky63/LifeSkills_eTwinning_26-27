@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Growing Up in Europe – Life Missions Passport</title>
+<style>
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --ink:#17324d;
+  --muted:#60748a;
+  --line:#d8e1eb;
+  --accent:#2f6ea8;
+  --accent-dark:#1f4f7b;
+  --accent2:#6e9fc7;
+  --soft:#eaf2f9;
+  --ok:#2f7d58;
+  --ok-soft:#edf8f2;
+  --warn:#9a6714;
+  --warn-soft:#fff8e7;
+  --danger:#8e3f42;
+  --shadow:0 10px 28px rgba(30,55,80,.10);
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#eef4fa 0%,#f9fbfd 100%);
+  color:var(--ink);
+}
+button,input,textarea,select{font:inherit}
+a{color:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{
+  outline:3px solid rgba(47,110,168,.28);
+  outline-offset:2px;
+}
+.app{
+  width:min(1180px,96vw);
+  margin:24px auto 40px;
+}
+.hero{
+  background:linear-gradient(135deg,#1f4f7b 0%,#4c88b8 100%);
+  color:white;
+  border-radius:26px;
+  padding:30px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:260px;height:260px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  right:-90px;top:-80px;
+}
+.kicker{
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-size:.78rem;
+  font-weight:700;
+  opacity:.88;
+}
+h1{margin:.35rem 0 .4rem;font-size:clamp(2rem,4vw,3.35rem);line-height:1.05}
+.hero p{margin:.5rem 0 0;max-width:820px;line-height:1.5}
+.hero .year{margin-top:14px;font-weight:700}
+
+.top-status{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:16px 0 10px;
+}
+.status-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px 14px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  line-height:1.35;
+}
+.status-dot{
+  flex:0 0 12px;
+  width:12px;height:12px;border-radius:50%;
+  margin-top:3px;
+  background:var(--ok);
+}
+.status-dot.backup{background:var(--warn)}
+.status-card strong{display:block;font-size:.92rem}
+.status-card span{display:block;color:var(--muted);font-size:.84rem;margin-top:2px}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:12px 0 18px;
+  align-items:center;
+}
+button,.file-label,.buttonlink{
+  border:0;
+  border-radius:999px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-weight:700;
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(47,110,168,.18);
+  text-decoration:none;
+  display:inline-block;
+}
+button.secondary,.file-label.secondary,.buttonlink.secondary{
+  background:white;
+  color:var(--accent);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+button.ghost{
+  background:transparent;color:var(--muted);
+  border:1px solid var(--line);box-shadow:none;
+}
+button.danger{background:var(--danger)}
+button.small-button,.file-label.small-button{padding:8px 12px;font-size:.88rem}
+.file-label input{display:none}
+.toolbar-note{font-size:.84rem;color:var(--muted)}
+
+.notice{
+  background:#fff;
+  border:1px solid var(--line);
+  border-left:5px solid var(--accent2);
+  padding:14px 16px;
+  border-radius:14px;
+  margin:16px 0;
+  color:var(--muted);
+  line-height:1.45;
+}
+.notice.warning{border-left-color:var(--warn);background:var(--warn-soft);color:#6d4b12}
+
+.post-backup-action{
+  display:none;
+  background:var(--ok-soft);
+  border:1px solid #cde7d8;
+  border-left:5px solid var(--ok);
+  border-radius:14px;
+  padding:14px 16px;
+  margin:12px 0 18px;
+}
+.post-backup-action.visible{display:block}
+.post-backup-action strong{display:block;margin-bottom:5px}
+.post-backup-action p{margin:0 0 10px;color:#355d49;line-height:1.45}
+.grid{
+  display:grid;
+  grid-template-columns:280px minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+.sidebar{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  position:sticky;
+  top:14px;
+  box-shadow:var(--shadow);
+}
+.profile-card{
+  background:var(--soft);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+}
+.profile-card label,.field label{
+  font-weight:700;
+  display:block;
+  margin-bottom:6px;
+}
+.profile-card input,.field input,.field textarea,.field select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  color:var(--ink);
+  background:white;
+}
+textarea{min-height:92px;resize:vertical;line-height:1.45}
+.small{font-size:.88rem;color:var(--muted)}
+.progress-wrap{margin:14px 0}
+.progress-track{height:10px;border-radius:20px;background:#e7edf3;overflow:hidden}
+.progress-bar{height:100%;width:0;background:var(--ok);transition:.3s ease}
+.progress-text{font-size:.88rem;color:var(--muted);margin-top:6px}
+.mission-nav{display:grid;gap:8px}
+.mission-nav button{
+  text-align:left;
+  border-radius:14px;
+  background:white;
+  color:var(--ink);
+  border:1px solid var(--line);
+  box-shadow:none;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:11px 12px;
+}
+.mission-nav button.active{background:var(--soft);border-color:var(--accent2)}
+.mission-nav .done{color:var(--ok);font-weight:900}
+.mission-nav .nav-intro{font-weight:700}
+.teacher-settings,.more-settings{
+  margin-top:16px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+}
+.teacher-settings summary,.more-settings summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:700;
+  color:var(--accent);
+}
+.teacher-settings .inside,.more-settings .inside{padding:0 16px 16px;display:grid;gap:12px}
+.content{min-width:0}
+.panel{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px;
+  min-height:620px;
+}
+.page{display:none}
+.page.active{display:block}
+
+/* Introduction */
+.intro-title{margin:0 0 6px;font-size:1.9rem}
+.intro-lead{margin:0;color:var(--muted);line-height:1.5;max-width:760px}
+.workflow{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin:22px 0;
+}
+.workflow-step{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  background:#f8fbfe;
+  min-height:142px;
+}
+.step-number{
+  display:grid;place-items:center;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--accent);color:#fff;font-weight:900;
+  margin-bottom:10px;
+}
+.workflow-step h3{margin:0 0 6px;font-size:1rem}
+.workflow-step p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.45}
+.intro-choice{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:18px 0;
+}
+.choice-card{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  background:#fff;
+}
+.choice-card.primary{background:var(--soft);border-color:#bdd3e5}
+.choice-card h3{margin:0 0 6px}
+.choice-card p{color:var(--muted);line-height:1.45;margin:.3rem 0 14px}
+.big-rule{
+  margin:20px 0;
+  border:2px solid #ead59e;
+  background:var(--warn-soft);
+  border-radius:18px;
+  padding:18px;
+}
+.big-rule h3{margin:0 0 8px;color:#775014}
+.big-rule .formula{
+  font-size:clamp(1.15rem,3vw,1.55rem);
+  font-weight:900;
+  color:#6b4910;
+  letter-spacing:.01em;
+}
+.big-rule p{margin:.55rem 0 0;color:#775014;line-height:1.45}
+.file-tip{font-family:Consolas,"Courier New",monospace;background:#fff;border:1px solid #ead59e;border-radius:8px;padding:3px 6px;white-space:nowrap}
+
+/* Missions */
+.mission-header{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  padding-bottom:16px;
+  margin-bottom:18px;
+}
+.mission-title h2{margin:0;font-size:1.8rem}
+.mission-title p{margin:.4rem 0 0;color:var(--muted)}
+.badge{
+  display:inline-block;
+  background:var(--soft);
+  color:var(--accent);
+  border-radius:999px;
+  padding:7px 10px;
+  font-weight:700;
+  font-size:.85rem;
+  margin-bottom:8px;
+}
+.stamp{
+  min-width:110px;
+  min-height:110px;
+  border-radius:50%;
+  border:4px dashed #b6c7d7;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:#8da1b4;
+  font-weight:900;
+  transform:rotate(-7deg);
+  padding:10px;
+}
+.stamp.completed{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 18px}
+.flow-step{background:#f8fbfe;border:1px solid var(--line);border-radius:14px;padding:12px;font-size:.92rem}
+.flow-step strong{display:block;color:var(--accent);margin-bottom:3px}
+.taskbox,.pane,.exchange,.save-leave{border-radius:16px;padding:15px 16px;margin-bottom:16px}
+.taskbox{background:#f8fbfe;border:1px solid var(--line)}
+.taskbox h3,.pane h3,.exchange h3,.save-leave h3{margin:0 0 7px;font-size:1.05rem}
+.taskbox p,.pane p,.exchange p,.save-leave p{margin:.25rem 0;line-height:1.45}
+.pane{background:#fbfdff;border:1px solid var(--line)}
+.exchange{background:#fff8e9;border:1px solid #ead59e}
+.exchange h3{color:#775014}
+.save-leave{background:var(--ok-soft);border:2px solid #abd3bf;margin-top:20px}
+.save-leave h3{color:#236044}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fields{display:grid;gap:13px}
+.field{display:block}
+.field .hint{font-size:.84rem;color:var(--muted);margin-top:5px}
+.starter{background:white;border:1px dashed #a9c7d9;border-radius:12px;padding:10px 12px;margin-top:12px;font-size:.92rem;line-height:1.5}
+.output{min-height:142px;background:white;border:2px solid #a9c9db;border-radius:12px;padding:12px;white-space:pre-wrap;line-height:1.5}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+.actions button,.actions .buttonlink,.actions .file-label{padding:8px 12px;font-size:.9rem}
+.checkrow{display:flex;gap:9px;align-items:flex-start;margin:9px 0}
+.checkrow input{width:19px;height:19px;margin-top:2px}
+.checkrow label{font-weight:400}
+.reflect-label{font-weight:700;display:block;margin-bottom:6px}
+.complete-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+
+/* Finish */
+.finish-summary{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;background:var(--soft);border:1px solid #bdd3e5;border-radius:18px;padding:18px;margin:18px 0}
+.finish-count{font-size:2rem;font-weight:900;color:var(--accent)}
+.finish-list{display:grid;gap:9px;margin:16px 0 22px}
+.finish-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border:1px solid var(--line);border-radius:12px}
+.finish-item .state{font-weight:700;color:var(--muted)}
+.finish-item.done .state{color:var(--ok)}
+
+.footer-preview{margin-top:18px;padding:14px 16px;border-radius:14px;border:1px dashed var(--line);color:var(--muted);font-size:.86rem;background:#fbfcfe}
+.toast{
+  position:fixed;
+  right:22px;bottom:22px;
+  max-width:360px;
+  background:#17324d;color:#fff;
+  border-radius:14px;padding:13px 16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.22);
+  z-index:99;
+  opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:.22s ease;
+  line-height:1.4;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+#printArea{display:none}
+.print-cover,.print-mission{page-break-after:always;min-height:90vh;position:relative;padding:18mm 16mm 24mm}
+.print-mission:last-child{page-break-after:auto}
+.print-title{font-size:2rem;margin:0 0 8px}
+.print-meta{color:#5e7286;margin-bottom:18px}
+.print-section{border-top:1px solid #cfd9e3;padding-top:10px;margin-top:12px}
+.print-section h3{font-size:1rem;margin:0 0 5px}
+.print-answer{white-space:pre-wrap;line-height:1.45}
+.print-footer{position:absolute;left:16mm;right:16mm;bottom:8mm;border-top:1px solid #cfd9e3;padding-top:7px;font-size:9pt;color:#66798b}
+.print-stamp{display:inline-block;border:2px solid #2f7d58;color:#2f7d58;border-radius:999px;padding:6px 10px;font-weight:700;margin-top:8px}
+
+@media(max-width:980px){.workflow{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.two-col,.flow{grid-template-columns:1fr}}
+@media(max-width:820px){
+  .grid{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .mission-header{flex-direction:column}
+  .stamp{min-width:90px;min-height:90px}
+  .top-status,.intro-choice{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .workflow{grid-template-columns:1fr}
+  .panel{padding:16px}
+  .hero{padding:24px 20px}
+  .complete-row,.finish-summary{display:block}
+  .complete-row button{margin-top:12px}
+  .finish-count{margin-top:10px}
+}
+@media print{
+  body{background:white}
+  .app,.toast{display:none!important}
+  #printArea{display:block!important}
+  @page{size:A4;margin:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="kicker">Growing Up in Europe</div>
+    <h1>Life Missions Passport</h1>
+    <p>Prepare your contribution, exchange ideas with students from other European countries in TwinSpace, and record what you learned.</p>
+    <div class="year" id="heroYear">Project year 2026/27</div>
+  </section>
+
+  <div class="top-status" aria-live="polite">
+    <div class="status-card">
+      <span class="status-dot"></span>
+      <div><strong>Browser autosave: active</strong><span>Your entries are saved automatically on this device while you work.</span></div>
+    </div>
+    <div class="status-card">
+      <span class="status-dot backup" id="backupDot"></span>
+      <div><strong id="backupStatusTitle">Backup file: not downloaded in this session</strong><span id="backupStatusText">Before you leave, download a backup file and keep it.</span></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button type="button" onclick="downloadBackup()">Download backup file</button>
+    <label class="file-label secondary">Load backup file
+      <input type="file" id="backupInput" accept=".json,application/json" onchange="restoreBackup(event)">
+    </label>
+    <button type="button" class="secondary" onclick="printPassport()">Create / Save PDF</button>
+    <span class="toolbar-note">Your teacher may ask you to use the backup file every time you return.</span>
+  </div>
+
+  <div class="post-backup-action" id="postBackupAction">
+    <strong>Backup saved. Working on a school computer?</strong>
+    <p>You can now remove your passport data from this browser. This does not delete the backup file you just downloaded.</p>
+    <button type="button" class="danger small-button" onclick="clearStudentData()">Delete my passport data from this browser</button>
+  </div>
+
+  <div class="notice warning">
+    <strong>Important:</strong> Your work is not sent to TwinSpace or to a school server automatically.
+    At the end of each lesson, use <strong>Download backup file</strong>. Next time, open this website and use <strong>Load backup file</strong> before you continue.
+  </div>
+
+  <div class="grid">
+    <aside class="sidebar">
+      <div class="profile-card">
+        <label for="studentName">Name / project nickname</label>
+        <input id="studentName" data-save="studentName" placeholder="e.g. Germany Pia">
+        <label for="country" style="margin-top:10px">Country</label>
+        <input id="country" data-save="country" placeholder="e.g. Germany">
+        <div class="small" style="margin-top:8px">Use the naming convention agreed by your school.</div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        <div class="progress-text" id="progressText">0 of 5 missions completed</div>
+      </div>
+
+      <nav class="mission-nav" id="missionNav" aria-label="Passport pages"></nav>
+
+      <details class="teacher-settings">
+        <summary>Project settings (teachers)</summary>
+        <div class="inside">
+          <div class="field">
+            <label for="projectTitle">Project title</label>
+            <input id="projectTitle" data-save="projectTitle" value="Growing Up in Europe – Life Skills for Adult Life">
+          </div>
+          <div class="field">
+            <label for="projectYear">Project year</label>
+            <input id="projectYear" data-save="projectYear" value="2026/27">
+          </div>
+          <div class="field">
+            <label for="partnerSchools">Partner schools</label>
+            <textarea id="partnerSchools" data-save="partnerSchools" placeholder="School 1, Country&#10;School 2, Country&#10;School 3, Country"></textarea>
+            <div class="hint">One school per line. The list is used automatically in the PDF footer.</div>
+          </div>
+          <div class="field">
+            <label for="twinspaceUrl">TwinSpace project link</label>
+            <input id="twinspaceUrl" data-save="twinspaceUrl" placeholder="https://...">
+            <div class="hint">When a link is entered, an “Open TwinSpace” button appears in every mission.</div>
+          </div>
+        </div>
+      </details>
+
+      <details class="more-settings">
+        <summary>More / Reset</summary>
+        <div class="inside">
+          <button type="button" class="danger small-button" onclick="clearStudentData()">Delete my passport data from this browser</button>
+          <div class="small">Use this on a shared school computer after you have downloaded your backup. It removes your passport entries from this website on this browser. Downloaded backup files and the project settings are not deleted.</div>
+        </div>
+      </details>
+    </aside>
+
+    <main class="content">
+      <section class="panel">
+        <section class="page active" id="introPage">
+          <span class="badge">Start here</span>
+          <h2 class="intro-title">How to use your Life Skills Passport</h2>
+          <p class="intro-lead">You will return to this website several times during the project. Follow the same routine every time so that you do not lose your work.</p>
+
+          <div class="workflow" aria-label="Four-step workflow">
+            <div class="workflow-step">
+              <div class="step-number">1</div>
+              <h3>Load</h3>
+              <p>First visit: start a new passport. Later visits: load the backup file you saved last time.</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">2</div>
+              <h3>Work</h3>
+              <p>Open your Life Mission, prepare your contribution, use TwinSpace and add your reflection.</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">3</div>
+              <h3>Download backup</h3>
+              <p>Before you leave, download a new backup file. Keep the newest file for your next lesson.</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">4</div>
+              <h3>Clear school PC</h3>
+              <p>On a shared school computer, delete your passport data from the browser after the backup is saved.</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">5</div>
+              <h3>Final PDF</h3>
+              <p>At the end of the project, create your final PDF passport and save it. You may also create a PDF earlier.</p>
+            </div>
+          </div>
+
+          <div class="intro-choice">
+            <div class="choice-card primary">
+              <h3>Is this your first visit?</h3>
+              <p>Enter your project nickname and country on the left. Then start with Mission 1.</p>
+              <button type="button" onclick="goToPage('mission1')">Start Mission 1 →</button>
+            </div>
+            <div class="choice-card">
+              <h3>Have you worked here before?</h3>
+              <p>Load the <span class="file-tip">.json</span> backup file you downloaded at the end of your last lesson.</p>
+              <label class="file-label secondary">Load my backup file
+                <input type="file" accept=".json,application/json" onchange="restoreBackup(event)">
+              </label>
+            </div>
+          </div>
+
+          <div class="big-rule">
+            <h3>Your routine for every lesson</h3>
+            <div class="formula">Load backup → Work → Download new backup → Clear school PC</div>
+            <p><strong>Do not delete the backup file.</strong> The file name starts with <span class="file-tip">Growing_Up_in_Europe_Passport_...</span>.</p>
+            <p class="small"><strong>On a school PC:</strong> after the backup has been downloaded, remove your passport data from the browser before you leave.</p>
+          </div>
+
+          <div class="notice">
+            <strong>Privacy:</strong> Your entries are stored locally in your browser and in the backup file you download. This website does not upload your answers to TwinSpace or another server by itself. On a shared school computer, you can remove your passport data from this browser after downloading your backup.
+          </div>
+        </section>
+
+        <div id="missionsContainer"></div>
+
+        <section class="page" id="finishPage">
+          <span class="badge">Finish</span>
+          <h2 class="intro-title">Finish your Life Skills Passport</h2>
+          <p class="intro-lead">You may create a PDF at any time. At the end of the project, make sure you create and save your final PDF passport.</p>
+
+          <div class="finish-summary">
+            <div>
+              <strong>Your progress</strong>
+              <div class="small">A mission is complete after you posted in TwinSpace, replied to a partner and added your reflection.</div>
+            </div>
+            <div class="finish-count" id="finishCount">0 / 5</div>
+          </div>
+
+          <div class="finish-list" id="finishList"></div>
+
+          <div class="big-rule">
+            <h3>At the end of the project</h3>
+            <p>Download one final backup file and create your final PDF. Keep both files until your teacher tells you what to upload.</p>
+            <div class="actions">
+              <button type="button" onclick="downloadBackup()">1 · Download final backup</button>
+              <button type="button" class="secondary" onclick="printPassport()">2 · Create / Save final PDF</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer-preview" id="footerPreview"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="printArea"></div>
+
+<script>
+const missions = [
+  {
+    n:1, title:"Meet the Team",
+    question:"Who are the students I will work with?",
+    situation:"You are going to work with students from different European countries. Prepare a short introduction so your partners can get to know you.",
+    fields:[
+      {key:"like", label:"One thing I like", placeholder:"e.g. football, music, gaming, cooking"},
+      {key:"good", label:"One thing I am good at", placeholder:"e.g. helping others, drawing, fixing things"},
+      {key:"learn", label:"One thing I would like to learn in this project", placeholder:"e.g. how young people live in other countries"},
+      {key:"ask", label:"One question for a student from another country", placeholder:"e.g. What do you like to do after school?"}
+    ],
+    starters:["I like …","I am good at …","In this project, I would like to learn …","My question for you is …"],
+    build:d => `Hello! My project name is ${d.studentName || "…"}. I am from ${d.country || "…"}. I like ${d.like || "…"}. I am good at ${d.good || "…"}. In this project, I would like to learn ${d.learn || "…"}. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your introduction in the TwinSpace forum. You may post the text or use it as a short audio script. Then read or listen to one student from another country and reply to that person.",
+    replies:["Nice to meet you! I also like …","That is interesting. I …","My answer to your question is …"]
+  },
+  {
+    n:2, title:"My First Home",
+    question:"What is important when I move into my first home?",
+    situation:"Imagine you are moving out for the first time. Make a simple choice and explain what matters to you.",
+    fields:[
+      {key:"home", label:"I would prefer to…", type:"select", options:["live alone","share a flat","stay with my family a little longer"]},
+      {key:"rent", label:"About how much could I spend on housing each month?", placeholder:"e.g. €450"},
+      {key:"important", label:"The most important thing about my first home is…", placeholder:"e.g. low rent, near work/school, public transport, enough space"},
+      {key:"ask", label:"One housing question for the partner countries", placeholder:"e.g. Is a deposit usual in your country?"}
+    ],
+    starters:["I would prefer to …","I could spend about … per month.","For me, … is important.","In your country, …?"],
+    build:d => `For my first home, I would prefer to ${d.home || "…"}. I could spend about ${d.rent || "…"} per month. For me, ${d.important || "…"} is important. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your prepared choice in the TwinSpace forum. Read one contribution from another country. Reply and compare one point: What is similar or different?",
+    replies:["I would choose the same because …","I would choose something different because …","In my country / for me, … is similar/different."]
+  },
+  {
+    n:3, title:"My First Money",
+    question:"Can I make sensible choices with my money?",
+    situation:"You have €100 left and 10 days until your next payment. You cannot buy everything you want. Decide what you would do first.",
+    fields:[
+      {key:"first", label:"What would you do first?", type:"select", options:["plan food and transport first","save part of the money","buy something I want and use the rest carefully","do something else"]},
+      {key:"save", label:"One thing I would save money on", placeholder:"e.g. takeaway food, clothes, subscriptions"},
+      {key:"reason", label:"Why?", placeholder:"e.g. because food and transport are more important"},
+      {key:"ask", label:"One money question for the partner countries", placeholder:"e.g. What do young people in your country spend a lot of money on?"}
+    ],
+    starters:["First, I would …","I would save money on …","This is important because …","My question is …"],
+    build:d => `I have €100 left for 10 days. First, I would ${d.first || "…"}. I would save money on ${d.save || "…"}. This is important because ${d.reason || "…"}. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your decision. Then read one decision from another country and reply: Do you agree? What would you do differently?",
+    replies:["I agree because …","I would do something different: …","For me, … is more important."]
+  },
+  {
+    n:4, title:"Stay Safe",
+    question:"What do I do when something goes wrong?",
+    situation:"Choose one everyday problem. Think about the first sensible step and who could help you.",
+    fields:[
+      {key:"problem", label:"Choose a situation", type:"select", options:["My phone is stolen.","I have an accident.","Something in my rented flat is damaged.","I become ill while travelling in another European country."]},
+      {key:"first", label:"What would you do first?", placeholder:"e.g. call someone, report it, ask for medical help"},
+      {key:"help", label:"Who or what could help?", placeholder:"e.g. police, doctor, insurance, landlord"},
+      {key:"ask", label:"One question for the partner countries", placeholder:"e.g. Who would you contact first in your country?"}
+    ],
+    starters:["My situation is …","First, I would …","I think … could help.","What would you do in your country?"],
+    build:d => `My situation is: ${d.problem || "…"}. First, I would ${d.first || "…"}. I think ${d.help || "…"} could help. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your case and first step. A partner from another country answers what they would do. Then reply once and note one difference or similarity.",
+    replies:["In my country, I would …","That is similar to my answer because …","That is different because …"]
+  },
+  {
+    n:5, title:"Smart & Digital Choices",
+    question:"Can I recognise when I should stop and check?",
+    situation:"Look again at everyday situations from adult life and consider the digital risks involved. Decide how you would check information before acting.",
+    fields:[
+      {key:"case", label:"Choose a situation", type:"select", options:["A very cheap flat asks for money before a viewing.","A message asks me to send my bank details.","An AI answer gives important information but no source.","An online shop price looks too good to be true."]},
+      {key:"trust", label:"Would you trust it?", type:"select", options:["No, not yet.","Maybe, but I would check first.","Yes, but only after checking."]},
+      {key:"check", label:"How would you check?", placeholder:"e.g. official website, another source, ask an adult/teacher, search for reviews"},
+      {key:"reason", label:"One warning sign", placeholder:"e.g. pressure, no source, strange web address, asks for money"},
+      {key:"ask", label:"One question for the partner countries", placeholder:"e.g. What online scam do young people often see in your country?"}
+    ],
+    starters:["I would / would not trust this because …","One warning sign is …","I would check …","My question for you is …"],
+    build:d => `My situation is: ${d.case || "…"}. ${d.trust || "…"}. One warning sign is ${d.reason || "…"}. I would check ${d.check || "…"}. My question for you is: ${d.ask || "…"}`,
+    twin:"Post your decision. Read one partner contribution and add one extra warning sign or one extra way to check. Together, collect practical tips that can be useful in everyday adult life.",
+    replies:["I agree. Another warning sign is …","I would also check …","A useful tip from my country is …"]
+  }
+];
+
+/* Keep the old key so existing browser data and old backup files remain compatible. */
+const STORAGE_KEY = "growingUpEuropePassport_v5";
+let currentMission = 1;
+let currentPage = "intro";
+let backupDownloadedThisSession = false;
+let toastTimer = null;
+
+function el(id){ return document.getElementById(id); }
+function missionKey(n,key){ return `m${n}_${key}`; }
+function escapeHtml(s){
+  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+}
+function toast(message){
+  const t=el("toast");
+  t.textContent=message;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),3200);
+}
+
+function renderNavigation(){
+  const nav=el("missionNav");
+  nav.innerHTML="";
+
+  const intro=document.createElement("button");
+  intro.type="button";
+  intro.dataset.page="intro";
+  intro.className="nav-intro";
+  intro.onclick=()=>goToPage("intro");
+  intro.innerHTML=`<span>How to use this passport</span><span></span>`;
+  nav.appendChild(intro);
+
+  missions.forEach(m=>{
+    const nb=document.createElement("button");
+    nb.type="button";
+    nb.dataset.page=`mission${m.n}`;
+    nb.dataset.mission=m.n;
+    nb.onclick=()=>goToPage(`mission${m.n}`);
+    nb.innerHTML=`<span><strong>${m.n}.</strong> ${escapeHtml(m.title)}</span><span class="done" id="navDone${m.n}"></span>`;
+    nav.appendChild(nb);
+  });
+
+  const finish=document.createElement("button");
+  finish.type="button";
+  finish.dataset.page="finish";
+  finish.onclick=()=>goToPage("finish");
+  finish.innerHTML=`<span><strong>✓</strong> Finish / PDF</span><span></span>`;
+  nav.appendChild(finish);
+}
+
+function renderMissions(){
+  const container=el("missionsContainer");
+  container.innerHTML="";
+  missions.forEach(m=>{
+    const sec=document.createElement("section");
+    sec.className="page mission";
+    sec.id=`mission${m.n}Page`;
+    sec.innerHTML=`
+      <div class="mission-header">
+        <div class="mission-title">
+          <span class="badge">Mission ${m.n}</span>
+          <h2>${escapeHtml(m.title)}</h2>
+          <p><strong>Essential question:</strong> ${escapeHtml(m.question)}</p>
+        </div>
+        <div class="stamp" id="stamp${m.n}">MISSION<br>${m.n}</div>
+      </div>
+      <div class="flow">
+        <div class="flow-step"><strong>1 · PREPARE</strong>Think about your answer and prepare simple English.</div>
+        <div class="flow-step"><strong>2 · EXCHANGE</strong>Use your prepared contribution in TwinSpace and reply to a partner.</div>
+        <div class="flow-step"><strong>3 · REFLECT</strong>Record one thing you learned from another country.</div>
+      </div>
+      <div class="taskbox">
+        <h3>Your situation</h3>
+        <p>${escapeHtml(m.situation)}</p>
+      </div>
+      <div class="two-col">
+        <div class="pane">
+          <h3>1 · PREPARE</h3>
+          <p class="small">Short answers are enough. Use simple English.</p>
+          <div class="fields" id="fields${m.n}"></div>
+          <div class="starter"><strong>Useful sentence starters</strong><br>${m.starters.map(escapeHtml).join("<br>")}</div>
+          <div class="actions">
+            <button type="button" onclick="buildContribution(${m.n})">Build my English contribution</button>
+          </div>
+        </div>
+        <div class="pane">
+          <h3>My TwinSpace contribution</h3>
+          <div class="output" id="output${m.n}" contenteditable="true" role="textbox" aria-label="Prepared TwinSpace contribution"></div>
+          <div class="actions">
+            <button type="button" class="secondary" onclick="copyContribution(${m.n},this)">Copy text</button>
+            <button type="button" class="secondary" onclick="useAsAudio(${m.n})">Use as audio script</button>
+          </div>
+          <p class="small" id="audioHint${m.n}">You can edit the generated text before posting it.</p>
+        </div>
+      </div>
+      <div class="exchange">
+        <h3>2 · EXCHANGE IN TWINSPACE</h3>
+        <p>${escapeHtml(m.twin)}</p>
+        <div class="starter"><strong>Reply starters</strong><br>${m.replies.map(escapeHtml).join("<br>")}</div>
+        <div class="actions">
+          <a class="buttonlink secondary twinspace-link" target="_blank" rel="noopener" style="display:none">Open TwinSpace</a>
+        </div>
+        <div class="checkrow">
+          <input type="checkbox" id="posted${m.n}" data-save="posted${m.n}">
+          <label for="posted${m.n}">I posted my contribution in TwinSpace.</label>
+        </div>
+        <div class="checkrow">
+          <input type="checkbox" id="replied${m.n}" data-save="replied${m.n}">
+          <label for="replied${m.n}">I read/listened to a student from another country and replied.</label>
+        </div>
+      </div>
+      <div class="pane">
+        <h3>3 · REFLECT</h3>
+        <label class="reflect-label" for="reflection${m.n}">One thing I learned from another country</label>
+        <textarea id="reflection${m.n}" data-save="reflection${m.n}" placeholder="e.g. I learned that …"></textarea>
+      </div>
+
+      <div class="save-leave">
+        <h3>Finished for today?</h3>
+        <p><strong>Download a new backup file before you close this page.</strong> Keep the newest backup file. You will load it when you return for the next Life Mission.</p>
+        <div class="actions">
+          <button type="button" onclick="downloadBackup()">Download backup file</button>
+          <span class="small">On a school PC: after the backup download, you can remove your passport data from this browser.</span>
+        </div>
+      </div>
+
+      <div class="complete-row">
+        <span class="small">The mission is completed after you have posted, replied and added your reflection.</span>
+        <button type="button" class="secondary" onclick="goNext(${m.n})">${m.n<5?"Next mission →":"Finish passport →"}</button>
+      </div>
+    `;
+    container.appendChild(sec);
+
+    const fhost=el(`fields${m.n}`);
+    m.fields.forEach(f=>{
+      const wrap=document.createElement("div");
+      wrap.className="field";
+      const id=missionKey(m.n,f.key);
+      let control="";
+      if(f.type==="select"){
+        control=`<select id="${id}" data-save="${id}"><option value="">Choose…</option>${f.options.map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join("")}</select>`;
+      }else{
+        control=`<input id="${id}" data-save="${id}" placeholder="${escapeHtml(f.placeholder||"")}">`;
+      }
+      wrap.innerHTML=`<label for="${id}">${escapeHtml(f.label)}</label>${control}${f.placeholder?`<div class="hint">${escapeHtml(f.placeholder)}</div>`:""}`;
+      fhost.appendChild(wrap);
+    });
+  });
+}
+
+function bindAutosave(){
+  document.querySelectorAll("[data-save]").forEach(node=>{
+    node.addEventListener("input",()=>saveNow(false,true));
+    node.addEventListener("change",()=>saveNow(false,true));
+  });
+  missions.forEach(m=>{
+    el(`output${m.n}`).addEventListener("input",()=>saveNow(false,true));
+  });
+}
+
+function goToPage(page,scroll=true){
+  currentPage=page;
+  if(page.startsWith("mission")){
+    const n=Number(page.replace("mission",""));
+    if(n>=1 && n<=5) currentMission=n;
+  }
+
+  document.querySelectorAll(".page").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".mission-nav button").forEach(b=>b.classList.remove("active"));
+
+  const target = page==="intro" ? el("introPage") : page==="finish" ? el("finishPage") : el(`${page}Page`);
+  if(target) target.classList.add("active");
+
+  const navButton=document.querySelector(`.mission-nav button[data-page="${page}"]`);
+  if(navButton) navButton.classList.add("active");
+
+  saveNow();
+  if(page==="finish") refreshFinish();
+  if(scroll) window.scrollTo({top:document.querySelector(".grid").offsetTop-10,behavior:"smooth"});
+}
+
+function goNext(n){
+  if(n<5) goToPage(`mission${n+1}`);
+  else goToPage("finish");
+}
+
+function getMissionData(m){
+  const d={
+    studentName:el("studentName").value.trim(),
+    country:el("country").value.trim()
+  };
+  m.fields.forEach(f=>d[f.key]=el(missionKey(m.n,f.key)).value.trim());
+  return d;
+}
+
+function buildContribution(n){
+  const m=missions.find(x=>x.n===n);
+  el(`output${n}`).innerText=m.build(getMissionData(m));
+  saveNow(false,true);
+  toast("Your contribution is ready. You can edit it before posting.");
+}
+
+async function copyContribution(n,btn){
+  const text=el(`output${n}`).innerText.trim();
+  saveNow();
+  try{
+    await navigator.clipboard.writeText(text);
+    const old=btn.textContent;
+    btn.textContent="Copied ✓";
+    setTimeout(()=>btn.textContent=old,1000);
+  }catch(e){
+    alert("Please select the text and copy it manually.");
+  }
+}
+
+function useAsAudio(n){
+  saveNow();
+  el(`audioHint${n}`).textContent="Read this prepared text aloud as your short audio message. Speak slowly. It does not need to be perfect.";
+}
+
+function collectData(){
+  const data={};
+  document.querySelectorAll("[data-save]").forEach(node=>{
+    data[node.dataset.save]=node.type==="checkbox"?node.checked:node.value;
+  });
+  missions.forEach(m=>data[`output${m.n}`]=el(`output${m.n}`)?.innerText||"");
+  data.currentMission=currentMission; // old backups use this
+  data.currentPage=currentPage;       // new backups use this
+  data.backupVersion=6;
+  return data;
+}
+
+function applyData(data){
+  document.querySelectorAll("[data-save]").forEach(node=>{
+    const k=node.dataset.save;
+    if(data[k]!==undefined){
+      if(node.type==="checkbox") node.checked=!!data[k];
+      else node.value=data[k];
+    }
+  });
+  missions.forEach(m=>{
+    if(data[`output${m.n}`]!==undefined) el(`output${m.n}`).innerText=data[`output${m.n}`];
+  });
+  refreshUI();
+
+  let page="intro";
+  if(typeof data.currentPage==="string" && /^(intro|finish|mission[1-5])$/.test(data.currentPage)) page=data.currentPage;
+  else if(data.currentMission && data.currentMission>=1 && data.currentMission<=5) page=`mission${data.currentMission}`;
+  goToPage(page,false);
+}
+
+function saveNow(showMessage=false,markChanged=false){
+  try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(collectData())); }catch(e){}
+  if(markChanged && backupDownloadedThisSession){
+    backupDownloadedThisSession=false;
+    updateBackupStatus();
+    const action=el("postBackupAction");
+    if(action) action.classList.remove("visible");
+  }
+  refreshUI();
+  if(showMessage) toast("Saved in this browser.");
+}
+
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(raw) applyData(JSON.parse(raw));
+    else goToPage("intro",false);
+  }catch(e){ goToPage("intro",false); }
+  refreshUI();
+}
+
+function missionDone(n){
+  return !!(el(`posted${n}`).checked && el(`replied${n}`).checked && el(`reflection${n}`).value.trim());
+}
+
+function completedCount(){ return missions.filter(m=>missionDone(m.n)).length; }
+
+function refreshUI(){
+  const done=completedCount();
+  missions.forEach(m=>{
+    const completed=missionDone(m.n);
+    const stamp=el(`stamp${m.n}`);
+    const navDone=el(`navDone${m.n}`);
+    if(stamp){
+      stamp.classList.toggle("completed",completed);
+      stamp.innerHTML=completed?`MISSION ${m.n}<br>COMPLETED ✓`:`MISSION<br>${m.n}`;
+    }
+    if(navDone) navDone.textContent=completed?"✓":"";
+  });
+  el("progressBar").style.width=(done/5*100)+"%";
+  el("progressText").textContent=`${done} of 5 missions completed`;
+  el("heroYear").textContent=`Project year ${el("projectYear").value || "2026/27"}`;
+  refreshTwinSpaceLinks();
+  updateFooterPreview();
+  refreshFinish();
+  updateBackupStatus();
+}
+
+function updateBackupStatus(){
+  const dot=el("backupDot");
+  const title=el("backupStatusTitle");
+  const text=el("backupStatusText");
+  if(!dot || !title || !text) return;
+  if(backupDownloadedThisSession){
+    dot.style.background="var(--ok)";
+    title.textContent="Backup file: downloaded ✓";
+    text.textContent="Keep this file. Load it when you return to the website.";
+  }else{
+    dot.style.background="var(--warn)";
+    title.textContent="Backup file: download before you leave";
+    text.textContent="Use “Download backup file” at the end of this lesson.";
+  }
+}
+
+function refreshFinish(){
+  if(!el("finishList")) return;
+  const done=completedCount();
+  el("finishCount").textContent=`${done} / 5`;
+  el("finishList").innerHTML=missions.map(m=>{
+    const ok=missionDone(m.n);
+    return `<div class="finish-item ${ok?"done":""}"><span><strong>Mission ${m.n}:</strong> ${escapeHtml(m.title)}</span><span class="state">${ok?"Completed ✓":"Not complete"}</span></div>`;
+  }).join("");
+}
+
+function refreshTwinSpaceLinks(){
+  const url=el("twinspaceUrl").value.trim();
+  document.querySelectorAll(".twinspace-link").forEach(a=>{
+    if(url){
+      a.href=url;
+      a.style.display="inline-block";
+    }else{
+      a.removeAttribute("href");
+      a.style.display="none";
+    }
+  });
+}
+
+function projectFooterText(){
+  const title=(el("projectTitle").value||"Growing Up in Europe – Life Skills for Adult Life").trim();
+  const lines=(el("partnerSchools").value||"").split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  let schools="";
+  if(lines.length===1) schools=lines[0];
+  else if(lines.length===2) schools=`${lines[0]} and ${lines[1]}`;
+  else if(lines.length>2) schools=`${lines.slice(0,-1).join(", ")} and ${lines[lines.length-1]}`;
+  else schools="[partner schools]";
+  return `This passport was completed as part of the eTwinning project “${title}” by students from ${schools}.`;
+}
+
+function updateFooterPreview(){
+  const year=(el("projectYear").value||"2026/27").trim();
+  el("footerPreview").innerHTML=`<strong>PDF footer preview</strong><br>${escapeHtml(projectFooterText())} <span style="white-space:nowrap">Project year: ${escapeHtml(year)}</span>`;
+}
+
+function downloadBackup(){
+  saveNow();
+  const data=collectData();
+  const nick=(data.studentName||"student").replace(/[^\w-]+/g,"_");
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=`Growing_Up_in_Europe_Passport_${nick}_backup.json`;
+  document.body.appendChild(a);
+  a.click();
+  const href=a.href;
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(href),1000);
+  backupDownloadedThisSession=true;
+  updateBackupStatus();
+  const action=el("postBackupAction");
+  if(action) action.classList.add("visible");
+  toast("Backup downloaded ✓ On a school PC, you can now delete your passport data from this browser.");
+}
+
+function restoreBackup(event){
+  const file=event.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      applyData(data);
+      saveNow();
+      backupDownloadedThisSession=false;
+      updateBackupStatus();
+      const action=el("postBackupAction");
+      if(action) action.classList.remove("visible");
+      toast("Backup loaded ✓ Your previous work is back. Download a new backup before you leave.");
+    }catch(e){
+      alert("This backup file could not be read. Please choose the .json backup file from your Life Skills Passport.");
+    }
+  };
+  reader.readAsText(file);
+  event.target.value="";
+}
+
+function clearStudentData(){
+  if(!backupDownloadedThisSession){
+    const proceed=confirm("No new backup has been downloaded in this session. Delete your passport data from this browser anyway?");
+    if(!proceed) return;
+  }else{
+    if(!confirm("Delete your passport data from this browser now? Your downloaded backup file will not be deleted.")) return;
+  }
+
+  // Keep teacher/project settings on shared school computers.
+  const keep={
+    projectTitle: el("projectTitle")?.value || "Growing Up in Europe – Life Skills for Adult Life",
+    projectYear: el("projectYear")?.value || "2026/27",
+    partnerSchools: el("partnerSchools")?.value || "",
+    twinspaceUrl: el("twinspaceUrl")?.value || ""
+  };
+
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll("[data-save]").forEach(node=>{
+    if(["projectTitle","projectYear","partnerSchools","twinspaceUrl"].includes(node.id)) return;
+    if(node.type==="checkbox") node.checked=false;
+    else node.value="";
+  });
+  missions.forEach(m=>el(`output${m.n}`).innerText="");
+
+  el("projectTitle").value=keep.projectTitle;
+  el("projectYear").value=keep.projectYear;
+  el("partnerSchools").value=keep.partnerSchools;
+  el("twinspaceUrl").value=keep.twinspaceUrl;
+
+  backupDownloadedThisSession=false;
+  currentMission=1;
+  currentPage="intro";
+  goToPage("intro",false);
+  refreshUI();
+  saveNow(false,false);
+  const action=el("postBackupAction");
+  if(action) action.classList.remove("visible");
+  toast("Passport data removed from this browser. Your downloaded backup file is unchanged.");
+}
+
+function buildPrintArea(){
+  const data=collectData();
+  const footer=projectFooterText();
+  const year=data.projectYear||"2026/27";
+  const student=data.studentName||"—";
+  const country=data.country||"—";
+  const area=el("printArea");
+  area.innerHTML=`
+    <section class="print-cover">
+      <div style="margin-top:25mm">
+        <div style="font-size:12pt;letter-spacing:.12em;text-transform:uppercase;color:#66798b;font-weight:700">Growing Up in Europe</div>
+        <h1 style="font-size:34pt;line-height:1.05;margin:8mm 0 4mm">Life Missions Passport</h1>
+        <p style="font-size:16pt;color:#5e7286;max-width:150mm;line-height:1.45">Prepare · Exchange · Reflect</p>
+        <div style="margin-top:25mm;font-size:13pt"><strong>Name / project nickname:</strong> ${escapeHtml(student)}</div>
+        <div style="margin-top:4mm;font-size:13pt"><strong>Country:</strong> ${escapeHtml(country)}</div>
+        <div style="margin-top:4mm;font-size:13pt"><strong>Project year:</strong> ${escapeHtml(year)}</div>
+      </div>
+      <div class="print-footer">${escapeHtml(footer)} Project year: ${escapeHtml(year)}</div>
+    </section>
+  ` + missions.map(m=>{
+      const out=data[`output${m.n}`]||"—";
+      const refl=data[`reflection${m.n}`]||"—";
+      const done=!!(data[`posted${m.n}`] && data[`replied${m.n}`] && String(refl).trim() && refl!=="—");
+      return `<section class="print-mission">
+        <div style="font-size:10pt;color:#66798b;font-weight:700;text-transform:uppercase">Mission ${m.n}</div>
+        <h2 class="print-title">${escapeHtml(m.title)}</h2>
+        <div class="print-meta"><strong>Essential question:</strong> ${escapeHtml(m.question)}</div>
+        <div class="print-section">
+          <h3>My prepared TwinSpace contribution</h3>
+          <div class="print-answer">${escapeHtml(out)}</div>
+        </div>
+        <div class="print-section">
+          <h3>Exchange</h3>
+          <div class="print-answer">Posted in TwinSpace: ${data[`posted${m.n}`]?"Yes":"No"}<br>Replied to a student from another country: ${data[`replied${m.n}`]?"Yes":"No"}</div>
+        </div>
+        <div class="print-section">
+          <h3>One thing I learned from another country</h3>
+          <div class="print-answer">${escapeHtml(refl)}</div>
+        </div>
+        ${done?`<div class="print-stamp">Mission ${m.n} completed ✓</div>`:""}
+        <div class="print-footer">${escapeHtml(footer)} Project year: ${escapeHtml(year)}</div>
+      </section>`;
+    }).join("");
+}
+
+function printPassport(){
+  saveNow();
+  buildPrintArea();
+  window.print();
+}
+
+renderNavigation();
+renderMissions();
+bindAutosave();
+loadSaved();
+</script>
+</body>
+</html>
